@@ -68,6 +68,12 @@ Retention varied substantially across acquisition periods and did not follow a s
 
 Representing acquisition timing as quarterly cohorts produced the strongest model, while geography provided virtually no incremental predictive value.
 
+
+### Model Performance
+
+![ROC Comparison](roc_comparison.png)
+
+The ROC comparison shows the incremental improvement from incorporating acquisition cohort information. The final quarter-based model achieved a ROC-AUC of **0.617**, compared with **0.570** for the behavior-only model.
 ---
 
 ## Analytical Workflow
