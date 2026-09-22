@@ -14,6 +14,17 @@ This project analyzes more than **1 million retail transaction records** to unde
 
 Using **MySQL and Python**, the analysis transforms raw transaction data into customer-level purchase journeys and evaluates 90-day repeat purchasing through behavioral analysis, cohort analysis, and logistic regression.
 
+
+## Data
+
+This project uses the **Online Retail II** dataset from the UCI Machine Learning Repository, containing more than **1 million transaction records** from a UK-based online retailer between December 2009 and December 2011.
+
+**Source:** Chen, D. (2012). *Online Retail II* [Dataset]. UCI Machine Learning Repository.  
+https://doi.org/10.24432/C5CG6D
+
+The raw transaction data includes invoice identifiers, product codes, quantities, transaction dates, unit prices, customer identifiers, and customer countries.
+
+
 ### Business Question
 
 > **What characteristics of a customer's first purchase are associated with making a second purchase within 90 days?**
