@@ -1,4 +1,3 @@
-/*
 ============================================================
 Customer Repeat Purchase & Retention Analysis
 ============================================================
@@ -88,7 +87,6 @@ FROM retail_transactions_raw;
 -- 2. TRANSACTION CLEANING
 -- =========================================================
 
-/*
 Cleaning rules:
 - Keep transactions with identifiable customers
 - Remove non-positive quantities
@@ -96,7 +94,7 @@ Cleaning rules:
 - Exclude cancelled invoices
 - Convert transaction timestamps to DATETIME
 - Create line-level revenue
-*/
+
 
 CREATE TABLE retail_transactions_clean AS
 
@@ -125,13 +123,12 @@ FROM retail_transactions_clean;
 -- 3. ORDER-LEVEL CUSTOMER JOURNEY
 -- =========================================================
 
-/*
 The cleaned dataset is transaction-line level.
 To analyze repeat purchasing, transactions are first
 aggregated to one row per customer × invoice.
 ROW_NUMBER() is then used to reconstruct each customer's
 purchase sequence.
-*/
+
 
 CREATE TABLE customer_orders AS
 
@@ -172,14 +169,13 @@ LIMIT 50;
 -- 4. FIRST & SECOND PURCHASE + RETENTION
 -- =========================================================
 
-/*
 Identify each customer's first and second purchases and
 calculate the number of days between them.
 
 Customers without a second purchase are retained so they
 can still be evaluated as non-repeat customers when they
 have sufficient observation time.
-*/
+
 
 CREATE TABLE customer_purchase_summary AS
 
@@ -222,14 +218,13 @@ GROUP BY customer_id;
 -- 4. FIRST & SECOND PURCHASE + RETENTION
 -- =========================================================
 
-/*
 Identify each customer's first and second purchases and
 calculate the number of days between them.
 
 Customers without a second purchase are retained so they
 can still be evaluated as non-repeat customers when they
 have sufficient observation time.
-*/
+
 
 CREATE TABLE customer_purchase_summary AS
 
@@ -273,13 +268,12 @@ GROUP BY customer_id;
 -- 5. CUSTOMER-LEVEL MODELING DATASET
 -- =========================================================
 
-/*
 Create the final customer-level feature table used for
 90-day retention analysis and predictive modeling.
 
 Only customers with a complete 90-day observation window
 are included.
-*/
+
 
 CREATE TABLE customer_features_90d AS
 
@@ -323,10 +317,9 @@ FROM customer_features_90d;
 -- 6. FIRST-ORDER VALUE SEGMENTATION
 -- =========================================================
 
-/*
 Segment customers into quartiles based on first-order
 value and compare subsequent 90-day repeat behavior.
-*/
+
 
 WITH value_segments AS (
     SELECT
@@ -350,11 +343,10 @@ ORDER BY value_quartile;
 -- 7. FIRST-ORDER PRODUCT VARIETY SEGMENTATION
 -- =========================================================
 
-/*
 Evaluate whether customers who explore a broader range
 of products on their first order show different repeat
 purchase behavior.
-*/
+
 
 WITH product_segments AS (
     SELECT
@@ -379,13 +371,12 @@ ORDER BY product_quartile;
 -- 8. ACQUISITION COHORT ANALYSIS
 -- =========================================================
 
-/*
 Compare 90-day repeat behavior across customer acquisition
 cohorts.
 
 This analysis evaluates whether retention differs depending
 on when customers were first acquired.
-*/
+
 
 SELECT
     acquisition_month,
@@ -401,7 +392,6 @@ ORDER BY acquisition_month;
 -- ANALYSIS SUMMARY
 -- =========================================================
 
-/*
 Key findings produced by this SQL pipeline:
 
 1. 23.39% of eligible customers repeated within 30 days.
@@ -417,4 +407,3 @@ Key findings produced by this SQL pipeline:
    predictive modeling in Python.
 The customer_features_90d table was exported for downstream
 exploratory analysis and logistic regression modeling.
-*/
